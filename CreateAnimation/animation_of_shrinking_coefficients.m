@@ -1,9 +1,7 @@
-clear;clc;
-min_lambda = 0;
+min_lambda = -1;
 max_lambda = 1;
-steps = 100;
+steps = 200;
 penalized_l2(min_lambda ,max_lambda,steps)
-clear; clc; % clear up some memory.
 load CV_results.mat
 for k=1:length(est_coef)
     B = est_coef{k};
