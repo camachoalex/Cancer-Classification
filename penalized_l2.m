@@ -1,4 +1,4 @@
-function []=penalized_l2(min_lambda ,max_lambda,steps)
+function [xtrain,ytrain, xtest,ytest]=penalized_l2(trainSize, min_lambda ,max_lambda,steps)
     % This function will output a cell matrix with the estimated RR
     % coefficients as a column (est_coef) with the first value corresponding to
     % the chosen regularization term, lambda. (i.e. [lambda; coef].
@@ -13,11 +13,17 @@ function []=penalized_l2(min_lambda ,max_lambda,steps)
         steps=1;
     end
     
-    
-    
     % load data 
     [X, Y ] = readData('imputed_prostate.xls');
     [n, m ] =size(X);
+    n = floor(n*trainSize);
+    xtrain = X(1:n,:);
+    ytrain = Y(1:n);
+    xtest  = X(n+1:end,:);
+    ytest  = Y(n+1:end);
+    X=X(1:n,:);
+    Y=Y(1:n);
+
     idx=1; 
     sprintf('Lambda test range: (%f, %f).',min_lambda,max_lambda)
 
