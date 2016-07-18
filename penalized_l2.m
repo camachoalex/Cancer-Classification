@@ -21,5 +21,6 @@ AA = (Z'*W*Z+lambda*R);
 BB = Z'*((Y-P)+W*Z*gamma_tilde');
 
 result = AA\BB;
+%sdfsfs
 
 
