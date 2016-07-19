@@ -1,8 +1,8 @@
 min_lambda = 0;
-max_lambda = 1;
+max_lambda = 2;
 trainSize=.7;
-steps = 200;
-penalized_l2(trainSize, min_lambda ,max_lambda,steps)
+steps = 50;
+penalized_l2_anim(trainSize, min_lambda ,max_lambda,steps)
 load CV_results.mat
 for k=1:length(est_coef)
     B = est_coef{k};

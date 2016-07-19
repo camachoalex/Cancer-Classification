@@ -1,4 +1,4 @@
-function [xtrain,ytrain, xtest,ytest]=penalized_l2(trainSize, min_lambda ,max_lambda,steps)
+function [xtrain,ytrain, xtest,ytest]=penalized_l2(X,Y,trainSize, min_lambda ,max_lambda,steps)
     % This function will output a cell matrix with the estimated RR
     % coefficients as a column (est_coef) with the first value corresponding to
     % the chosen regularization term, lambda. (i.e. [lambda; coef].
@@ -14,18 +14,20 @@ function [xtrain,ytrain, xtest,ytest]=penalized_l2(trainSize, min_lambda ,max_la
     end
     
     % load data 
-    [X, Y ] = readData('imputed_prostate.xls');
     [n, m ] =size(X);
     n = floor(n*trainSize);
-    xtrain = X(1:n,:);
-    ytrain = Y(1:n);
-    xtest  = X(n+1:end,:);
-    ytest  = Y(n+1:end);
-    X=X(1:n,:);
-    Y=Y(1:n);
-
+    [trainInd,~,testInd] = dividerand(n,trainSize,.0,1-trainSize);
+    xtrain = X(trainInd,:);
+    ytrain = Y(trainInd);
+    xtest  = X(testInd,:);
+    ytest  = Y(testInd);
+    X=xtrain;
+    Y=ytrain;
+    [n, m ] =size(X);
+ % standardize data set
+ X = (X-mean(X(:))/std(X(:)));
     idx=1; 
-    sprintf('Lambda test range: (%f, %f).',min_lambda,max_lambda)
+%     sprintf('Lambda test range: (%f, %f).',min_lambda,max_lambda)
 
     for lambda = linspace(min_lambda,max_lambda,steps)
         B = zeros(1, m)';
@@ -47,10 +49,10 @@ function [xtrain,ytrain, xtest,ytest]=penalized_l2(trainSize, min_lambda ,max_la
         est_coef{idx} = [ lambda ;AA\BB ] ;
         idx = idx+1;
     end
-    disp('Done.')
-    disp('Saving...')
+%     disp('Done.')
+%     disp('Saving...')
     save('CV_results.mat','est_coef')
-    disp('Results saved in CV_results.mat')
+%     disp('Results saved in CV_results.mat')
 
 end
 
