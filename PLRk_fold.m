@@ -8,7 +8,7 @@ numFolds = 10;
 idx = cvpartition(m,'KFold',numFolds);
 loc=0;
 tic
-for lambda = 98
+for lambda = 1
     accuracy =zeros(1,numFolds);
     for k=1:numFolds
         xtrain = x(idx.training(k),:);
