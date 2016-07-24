@@ -23,8 +23,11 @@ function [Z, est_coef]=penalized_l2_kfold(X,Y, min_lambda ,max_lambda,steps)
     for lambda = linspace(min_lambda,max_lambda,steps)
         B = zeros(1, m)';
         U = ones(1,n);
-        W = eye(n)*.25;
         P = logfcn(B,X)';
+        W=eye(n);
+        for k =1:length(P)
+            W(k,k) = P(k)*(1-P(k));
+        end
         alpha_tilde = log(mean(Y)/(1-mean(Y)));
 
 %         eta = alpha_tilde + X*B;
