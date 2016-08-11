@@ -62,6 +62,3 @@ This function calls the shrunken centroid method including the correction term.
 SUB_FUNCTION: ShrunkenCentroid_modified.m
 This function calls the shrunken centroid method without the correction term.
 **************************************************************
-RESULTS:
-
-We included an archive of figures showing the results for our modified methods.
