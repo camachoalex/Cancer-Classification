@@ -3,8 +3,10 @@ MATLAB Code for: Penalized Logistic Regression & Nearest Shrunken Centroid for C
 
 Authors: Alejandro Camacho, Khoa Ta, Duy Tran.
 
-Email inquires and questions to: 
+Email: 
 camacho@csu.fullerton.edu
+khoata_us@yahoo.com
+duyqt@csu.fullerton.edu
 
 MATLAB VERSION: R2015b - academic use
 
