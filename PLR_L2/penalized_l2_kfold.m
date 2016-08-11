@@ -16,21 +16,18 @@ function [Z, est_coef]=penalized_l2_kfold(X,Y, min_lambda ,max_lambda,steps)
     % load data 
     [n, m ] =size(X);
  % standardize data set
-% %     X = (X-mean(X(:))/std(X(:)));
-    idx=1; 
+% %      X = (X-mean(X(:))./std(X(:)));
 %     sprintf('Lambda test range: (%f, %f).',min_lambda,max_lambda)
 
     for lambda = linspace(min_lambda,max_lambda,steps)
         B = zeros(1, m)';
         U = ones(1,n);
-        P = logfcn(B,X)';
+        alpha_tilde = log(mean(Y)./(1-mean(Y)));    
+        P = logfcn(X,B,alpha_tilde)';
         W=eye(n);
         for k =1:length(P)
             W(k,k) = P(k)*(1-P(k));
         end
-        alpha_tilde = log(mean(Y)/(1-mean(Y)));
-
-%         eta = alpha_tilde + X*B;
 
         % Equation 12 from shan and ten.
         gamma_tilde = [alpha_tilde ;B]';
@@ -40,14 +37,8 @@ function [Z, est_coef]=penalized_l2_kfold(X,Y, min_lambda ,max_lambda,steps)
         AA = (Z'*W*Z+lambda*R);
         BB = Z'*((Y-P)+W*Z*gamma_tilde');
         
-        est_coef = [ AA\BB ] ;
-        idx = idx+1;
+        est_coef =  AA\BB  ;
     end
-%     disp('Done.')
-%     disp('Saving...')
-%     save('CV_results.mat','est_coef')
-%     disp('Results saved in CV_results.mat')
-
 end
 
 
